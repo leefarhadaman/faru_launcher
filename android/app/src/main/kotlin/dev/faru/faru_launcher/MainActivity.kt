@@ -1,6 +1,9 @@
 package dev.faru.faru_launcher
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import io.flutter.embedding.android.FlutterActivity
@@ -9,14 +12,31 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private val channelName = "dev.faru.launcher/apps"
+    private var methodChannel: MethodChannel? = null
+    private var packageReceiverRegistered = false
+
+    private val packageChangeReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val action = intent?.action ?: return
+            if (action == Intent.ACTION_PACKAGE_ADDED ||
+                action == Intent.ACTION_PACKAGE_REMOVED ||
+                action == Intent.ACTION_PACKAGE_REPLACED
+            ) {
+                methodChannel?.invokeMethod("onPackagesChanged", null)
+            }
+        }
+    }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        MethodChannel(
+        val channel = MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
             channelName
-        ).setMethodCallHandler { call, result ->
+        )
+        methodChannel = channel
+
+        channel.setMethodCallHandler { call, result ->
             when (call.method) {
                 "getApps" -> {
                     try {
@@ -45,6 +65,50 @@ class MainActivity : FlutterActivity() {
                 }
                 else -> result.notImplemented()
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerPackageReceiverIfNeeded()
+    }
+
+    override fun onStop() {
+        unregisterPackageReceiverIfNeeded()
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        unregisterPackageReceiverIfNeeded()
+        methodChannel?.setMethodCallHandler(null)
+        methodChannel = null
+        super.onDestroy()
+    }
+
+    private fun registerPackageReceiverIfNeeded() {
+        if (packageReceiverRegistered) return
+        val filter = IntentFilter().apply {
+            addAction(Intent.ACTION_PACKAGE_ADDED)
+            addAction(Intent.ACTION_PACKAGE_REMOVED)
+            addAction(Intent.ACTION_PACKAGE_REPLACED)
+            addDataScheme("package")
+        }
+        if (Build.VERSION.SDK_INT >= 33) {
+            registerReceiver(packageChangeReceiver, filter, Context.RECEIVER_EXPORTED)
+        } else {
+            registerReceiver(packageChangeReceiver, filter)
+        }
+        packageReceiverRegistered = true
+    }
+
+    private fun unregisterPackageReceiverIfNeeded() {
+        if (!packageReceiverRegistered) return
+        try {
+            unregisterReceiver(packageChangeReceiver)
+        } catch (_: IllegalArgumentException) {
+            // Receiver was already unregistered.
+        } finally {
+            packageReceiverRegistered = false
         }
     }
 

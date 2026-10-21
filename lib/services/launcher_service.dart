@@ -19,6 +19,21 @@ class LauncherService {
 
   final MethodChannel _channel;
 
+  /// Registers a callback invoked when Android broadcasts package installation,
+  /// removal, or replacement while Faru Launcher is active.
+  void setPackagesChangedListener(VoidCallback? onPackagesChanged) {
+    if (onPackagesChanged == null) {
+      _channel.setMethodCallHandler(null);
+      return;
+    }
+    _channel.setMethodCallHandler((MethodCall call) async {
+      if (call.method == 'onPackagesChanged') {
+        onPackagesChanged();
+      }
+      return null;
+    });
+  }
+
   /// Raw MethodChannel call matching the starter contract in Section 4.3.
   Future<List<Map<Object?, Object?>>> getApps() async {
     try {

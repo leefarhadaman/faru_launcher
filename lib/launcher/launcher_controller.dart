@@ -9,7 +9,11 @@ class LauncherController extends ChangeNotifier {
     LauncherService? launcherService,
     PreferencesService? preferencesService,
   })  : _launcherService = launcherService ?? LauncherService(),
-        _preferencesService = preferencesService ?? PreferencesService();
+        _preferencesService = preferencesService ?? PreferencesService() {
+    _launcherService.setPackagesChangedListener(() {
+      loadApps(showLoadingIndicator: false);
+    });
+  }
 
   static const int maxRecentSearches = 5;
 
@@ -18,6 +22,12 @@ class LauncherController extends ChangeNotifier {
 
   LauncherState _state = const LauncherState();
   LauncherState get state => _state;
+
+  @override
+  void dispose() {
+    _launcherService.setPackagesChangedListener(null);
+    super.dispose();
+  }
 
   Future<void> initialize() async {
     final prefs = await _preferencesService.load();
