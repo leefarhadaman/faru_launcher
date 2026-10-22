@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="2340" viewBox="0 0 1080 2340">
+  <defs>
+    <radialGradient id="g1" cx="30%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#1a1040"/>
+      <stop offset="100%" stop-color="#050508"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="80%" cy="75%" r="50%">
+      <stop offset="0%" stop-color="#0d1a2a"/>
+      <stop offset="100%" stop-color="#050508" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0EA5E9" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#0EA5E9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur1">
+      <feGaussianBlur stdDeviation="80"/>
+    </filter>
+  </defs>
+
+  <!-- Base dark background -->
+  <rect width="1080" height="2340" fill="url(#g1)"/>
+  <rect width="1080" height="2340" fill="url(#g2)"/>
+
+  <!-- Purple glow top-left -->
+  <ellipse cx="180" cy="520" rx="420" ry="380" fill="url(#glow1)" filter="url(#blur1)"/>
+
+  <!-- Blue glow bottom-right -->
+  <ellipse cx="900" cy="1820" rx="380" ry="340" fill="url(#glow2)" filter="url(#blur1)"/>
+
+  <!-- Subtle purple mid -->
+  <ellipse cx="640" cy="1180" rx="300" ry="260" fill="#4C1D95" fill-opacity="0.12" filter="url(#blur1)"/>
+
+  <!-- Fine star dots -->
+  <circle cx="120" cy="180" r="1.2" fill="white" fill-opacity="0.5"/>
+  <circle cx="340" cy="90" r="0.8" fill="white" fill-opacity="0.4"/>
+  <circle cx="620" cy="210" r="1.0" fill="white" fill-opacity="0.45"/>
+  <circle cx="870" cy="140" r="1.2" fill="white" fill-opacity="0.5"/>
+  <circle cx="980" cy="360" r="0.8" fill="white" fill-opacity="0.35"/>
+  <circle cx="60" cy="480" r="1.0" fill="white" fill-opacity="0.4"/>
+  <circle cx="440" cy="650" r="0.9" fill="white" fill-opacity="0.3"/>
+  <circle cx="770" cy="530" r="1.1" fill="white" fill-opacity="0.4"/>
+  <circle cx="1020" cy="700" r="0.8" fill="white" fill-opacity="0.35"/>
+  <circle cx="200" cy="900" r="1.0" fill="white" fill-opacity="0.25"/>
+  <circle cx="560" cy="1050" r="0.9" fill="white" fill-opacity="0.2"/>
+  <circle cx="930" cy="990" r="1.1" fill="white" fill-opacity="0.25"/>
+  <circle cx="80" cy="1300" r="0.8" fill="white" fill-opacity="0.2"/>
+  <circle cx="390" cy="1500" r="1.0" fill="white" fill-opacity="0.18"/>
+  <circle cx="720" cy="1420" r="0.9" fill="white" fill-opacity="0.22"/>
+  <circle cx="1000" cy="1650" r="1.2" fill="white" fill-opacity="0.3"/>
+  <circle cx="250" cy="1800" r="0.8" fill="white" fill-opacity="0.2"/>
+  <circle cx="580" cy="1950" r="1.0" fill="white" fill-opacity="0.25"/>
+  <circle cx="860" cy="2100" r="0.9" fill="white" fill-opacity="0.18"/>
+  <circle cx="150" cy="2200" r="1.1" fill="white" fill-opacity="0.22"/>
+  <circle cx="490" cy="2280" r="0.8" fill="white" fill-opacity="0.15"/>
+</svg>

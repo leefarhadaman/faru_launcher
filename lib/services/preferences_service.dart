@@ -59,7 +59,7 @@ class PreferencesData {
 }
 
 class PreferencesService {
-  PreferencesService({File? storageFile}) : _storageFile = storageFile;
+  PreferencesService({this._storageFile});
 
   final File? _storageFile;
   PreferencesData _cache = const PreferencesData();

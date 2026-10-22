@@ -14,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Faru Settings'),
+        title: const Text('Auvriko Settings'),
       ),
       body: SafeArea(
         child: AnimatedBuilder(
@@ -97,7 +97,7 @@ class SettingsScreen extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   title: Text('On-device privacy guarantee'),
                   subtitle: Text(
-                    'Faru Launcher keeps your installed app list, favorites, and search history strictly on-device. No analytics or network calls are used.',
+                    'Auvriko keeps your installed app list, favorites, and search history strictly on-device. No analytics or network calls are used.',
                   ),
                 ),
               ],
